@@ -11,7 +11,7 @@ import type {
 } from "@atproto/oauth-client-node";
 import { getDb } from "../db";
 
-export const SCOPE = "atproto";
+export const SCOPE = "atproto repo:xyz.statusphere.status";
 const PUBLIC_URL = process.env.PUBLIC_URL;
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 

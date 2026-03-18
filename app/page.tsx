@@ -1,5 +1,6 @@
 import { LoginForm } from "@/components/LoginForm";
 import { LogoutButton } from "@/components/LogoutButton";
+import { StatusPicker } from "@/components/StatusPicker";
 import { getSession } from "@/lib/auth/session";
 import Image from "next/image";
 
@@ -11,10 +12,10 @@ export default async function Home() {
       <main className="w-full max-w-md mx-auto p-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-2">
-            AT Protocol OAuth
+            AT Protocol stuff
           </h1>
           <p className="text-zinc-600 dark:text-zinc-400">
-            Sign in with your AT Protocol account
+            Sign in with your AT Protocol account and do emoji stuff
           </p>
         </div>
 
@@ -23,12 +24,13 @@ export default async function Home() {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                  Signed in as{" "}
+                  Signed in as
                   <span className="font-mono">{session.did}</span>
                 </p>
                 <LogoutButton />
               </div>
               <p className="text-green-600">Authentication working!</p>
+              <StatusPicker />
             </div>
           ) : (
             <LoginForm />

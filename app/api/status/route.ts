@@ -1,0 +1,33 @@
+import { getOAuthClient } from "@/lib/auth/client";
+import { getSession } from "@/lib/auth/session";
+import { Client, DatetimeString } from "@atproto/lex";
+import { NextRequest, NextResponse } from "next/server";
+import * as xyz from "@/src/lexicons/xyz";
+
+export async function POST(request: NextRequest) {
+  const session = await getSession();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const { status } = await request.json();
+
+  if (!status || typeof status !== "string") {
+    return NextResponse.json({ error: "Status is requred" }, { status: 400 });
+  }
+
+  const client = await getOAuthClient();
+  const oauthSession = await client.restore(session.did);
+  const lexClient = new Client(oauthSession);
+
+  const createdAt = new Date().toISOString() as DatetimeString;
+  const res = await lexClient.create(xyz.statusphere.status, {
+    status,
+    createdAt,
+  });
+
+  return NextResponse.json({
+    success: true,
+    uri: res.uri,
+  });
+}
